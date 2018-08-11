@@ -37,7 +37,7 @@ public enum Operator {
             throw new NotAnOperatorException();
     }
 
-    public StackOperation stackOperationSpec() {
+    public StackOperation stackOperation() {
         return this.stackOperation;
     }
 }

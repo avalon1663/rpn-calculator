@@ -1,17 +1,17 @@
 package org.coding.exercise.operation;
 
-import org.coding.exercise.common.StackOperationLog;
+import org.coding.exercise.common.OperationLog;
 
 import java.util.Stack;
 
 public class StackUndo implements StackOperation {
 
-    public void run(Stack<Double> stack, Stack<StackOperationLog> stackOperationLogs) {
+    public void run(Stack<Double> stack, Stack<OperationLog> operationLogs) {
         double popped = stack.pop();
 
-        StackOperationLog undoLog =
-                new StackOperationLog().withPopped(popped);
-        StackOperationLog redoLog = stackOperationLogs.pop();
+        OperationLog undoLog =
+                new OperationLog().withPopped(popped);
+        OperationLog redoLog = operationLogs.pop();
 
         while (!redoLog.getPopped().isEmpty()) {
             double pop = redoLog.getPopped().pop();

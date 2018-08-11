@@ -2,7 +2,7 @@ package org.coding.exercise.common;
 
 import java.util.Stack;
 
-public class StackOperationLog {
+public class OperationLog {
 
     private Stack<Double> pushed = new Stack<>();
 
@@ -24,12 +24,12 @@ public class StackOperationLog {
         this.popped = popped;
     }
 
-    public StackOperationLog withPushed(double number) {
+    public OperationLog withPushed(double number) {
         this.pushed.push(number);
         return this;
     }
 
-    public StackOperationLog withPopped(double... args) {
+    public OperationLog withPopped(double... args) {
         for (double arg : args) {
             this.popped.push(arg);
         }
