@@ -1,5 +1,7 @@
 package org.coding.exercise.common;
 
-public class UnsupportedStackOperationException extends RuntimeException {
+import java.io.IOException;
+
+public class UnsupportedStackOperationException extends IOException {
 
 }

@@ -14,9 +14,9 @@ public class ReversePolishNotionCalculator {
 
     public void parseCommand(String command) throws InsufficientParametersException {
         try {
-            StackOperation operation =
+            StackOperation stackOperation =
                     this.resolveAsOperation(command);
-            this.resolveStackOperation(operation, this.stack, this.operationLogs);
+            this.resolveStackOperation(stackOperation, this.stack, this.operationLogs);
         } catch (UnsupportedStackOperationException e) {
             this.resolveAsInput(command, this.stack, this.operationLogs);
         }

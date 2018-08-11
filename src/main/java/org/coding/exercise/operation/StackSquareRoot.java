@@ -14,7 +14,7 @@ public class StackSquareRoot implements StackOperation {
 
             stack.push(result);
 
-            operationLogs.push(new OperationLog().withPushed(result).withPopped(value));
+            operationLogs.push(new OperationLog().withPushed(result).withOrderPopped(value));
         } else
             throw new InsufficientParametersException();
     }

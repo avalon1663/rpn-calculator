@@ -29,7 +29,7 @@ public class OperationLog {
         return this;
     }
 
-    public OperationLog withPopped(double... numbers) {
+    public OperationLog withOrderPopped(double... numbers) {
         for (double number : numbers) {
             this.popped.push(number);
         }

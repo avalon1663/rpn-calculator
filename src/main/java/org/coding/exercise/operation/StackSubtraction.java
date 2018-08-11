@@ -15,8 +15,8 @@ public class StackSubtraction implements StackOperation {
 
             stack.push(result);
 
-            operationLogs.push(new OperationLog().withPushed(result).withPopped(right, left));
+            operationLogs.push(new OperationLog().withPushed(result).withOrderPopped(right, left));
         } else
-            throw new IllegalArgumentException("Not enough parameters");
+            throw new InsufficientParametersException();
     }
 }

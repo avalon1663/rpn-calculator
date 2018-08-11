@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.ByteArrayInputStream;
+import java.util.Scanner;
 import java.util.Stack;
 
 @RunWith(JUnit4.class)
@@ -79,6 +81,16 @@ public class ReversePolishNotionCalculatorTest {
         Stack<Double> stack4 =
                 this.calculate(calculator, input4);
         Assert.assertArrayEquals(new Object[]{20D, 5D}, stack4.toArray());
+
+        String input5 = "undo undo";
+        Stack<Double> stack5 =
+                this.calculate(calculator, input5);
+        Assert.assertArrayEquals(new Object[]{5D, 4D}, stack5.toArray());
+
+        String input6 = "undo undo";
+        Stack<Double> stack6 =
+                this.calculate(calculator, input6);
+        Assert.assertTrue(stack6.isEmpty());
     }
 
     @Test
@@ -147,14 +159,14 @@ public class ReversePolishNotionCalculatorTest {
     }
 
     private Stack<Double> calculate(ReversePolishNotionCalculator calculator, String input) {
-        for (int idx = 0; idx < input.length(); idx++) {
-            String command = Character
-                    .toString(input.charAt(idx)).trim();
-            int position = idx + 1;
+        Scanner scanner =
+                new Scanner(new ByteArrayInputStream(input.getBytes()));
+        int position = 0;
 
-            if (command.length() == 0) {
-                continue;
-            }
+        while (scanner.hasNext()) {
+            String command =
+                    scanner.next();
+            position += 1;
             try {
                 calculator.parseCommand(command);
             } catch (InsufficientParametersException e) {
@@ -162,6 +174,7 @@ public class ReversePolishNotionCalculatorTest {
                         + " (position: " + position + "): insufficient parameters");
                 break;
             }
+            position += 1;
         }
         return calculator.getStack();
     }
