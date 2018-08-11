@@ -8,16 +8,18 @@ import java.util.Stack;
 public class StackUndo implements StackOperation {
 
     public void run(Stack<Double> stack, Stack<OperationLog> operationLogs) throws InsufficientParametersException {
-        double popped = stack.pop();
-
-        OperationLog undoLog =
-                new OperationLog().withPopped(popped);
-        OperationLog redoLog = operationLogs.pop();
-
-        while (!redoLog.getPopped().isEmpty()) {
-            double pop = redoLog.getPopped().pop();
-            stack.push(pop);
-            undoLog.withPushed(pop);
-        }
+        if (stack.size() > 0) {
+            OperationLog undoLog =
+                    operationLogs.pop();
+            while (!undoLog.getPushed().isEmpty()) {
+                undoLog.getPushed().pop();
+                stack.pop();
+            }
+            while (!undoLog.getPopped().isEmpty()) {
+                double pop = undoLog.getPopped().pop();
+                stack.push(pop);
+            }
+        } else
+            throw new InsufficientParametersException();
     }
 }
