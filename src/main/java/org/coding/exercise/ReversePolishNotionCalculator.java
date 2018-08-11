@@ -1,7 +1,7 @@
 package org.coding.exercise;
 
-import org.coding.exercise.common.NotAnOperatorException;
 import org.coding.exercise.common.OperationLog;
+import org.coding.exercise.common.UnsupportedStackOperationException;
 import org.coding.exercise.operation.*;
 
 import java.util.Stack;
@@ -13,15 +13,15 @@ public class ReversePolishNotionCalculator {
 
     public void parseCommand(String command) {
         try {
-            StackOperation stackOperation =
-                    this.resolveAsOperator(command);
-            this.resolveStackOperation(stackOperation, this.stack, this.operationLogs);
-        } catch (NotAnOperatorException e) {
+            StackOperation operation =
+                    this.resolveAsOperation(command);
+            this.resolveStackOperation(operation, this.stack, this.operationLogs);
+        } catch (UnsupportedStackOperationException e) {
             this.resolveAsInput(command, this.stack, this.operationLogs);
         }
     }
 
-    protected StackOperation resolveAsOperator(String command) throws NotAnOperatorException {
+    protected StackOperation resolveAsOperation(String command) throws UnsupportedStackOperationException {
         if ("+".equals(command)) {
             return new StackAddition();
         } else if ("-".equals(command)) {
@@ -37,7 +37,7 @@ public class ReversePolishNotionCalculator {
         } else if ("clear".equalsIgnoreCase(command)) {
             return new StackClear();
         } else
-            throw new NotAnOperatorException();
+            throw new UnsupportedStackOperationException();
     }
 
     protected void resolveStackOperation(StackOperation stackOperation, Stack<Double> stack, Stack<OperationLog> operationLogs) {
