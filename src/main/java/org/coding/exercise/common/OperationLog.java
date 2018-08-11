@@ -29,9 +29,9 @@ public class OperationLog {
         return this;
     }
 
-    public OperationLog withPopped(double... args) {
-        for (double arg : args) {
-            this.popped.push(arg);
+    public OperationLog withPopped(double... numbers) {
+        for (double number : numbers) {
+            this.popped.push(number);
         }
         return this;
     }

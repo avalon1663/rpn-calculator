@@ -1,12 +1,11 @@
 package org.coding.exercise;
 
+import org.coding.exercise.common.InsufficientParametersException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.ByteArrayInputStream;
-import java.util.Scanner;
 import java.util.Stack;
 
 @RunWith(JUnit4.class)
@@ -79,8 +78,6 @@ public class ReversePolishNotionCalculatorTest {
         String input4 = "undo";
         Stack<Double> stack4 =
                 this.calculate(calculator, input4);
-        System.out.println(stack3);
-
         Assert.assertArrayEquals(new Object[]{20D, 5D}, stack4.toArray());
     }
 
@@ -139,12 +136,32 @@ public class ReversePolishNotionCalculatorTest {
         Assert.assertArrayEquals(new Object[]{120D}, stack2.toArray());
     }
 
+    @Test
+    public void case8() {
+        ReversePolishNotionCalculator
+                calculator = new ReversePolishNotionCalculator();
+        String input1 = "1 2 3 * 5 + * * 6 5";
+        Stack<Double> stack1 =
+                this.calculate(calculator, input1);
+        Assert.assertArrayEquals(new Object[]{11D}, stack1.toArray());
+    }
+
     private Stack<Double> calculate(ReversePolishNotionCalculator calculator, String input) {
-        Scanner scanner =
-                new Scanner(new ByteArrayInputStream(input.getBytes()));
-        while (scanner.hasNext()) {
-            String next = scanner.next();
-            calculator.parseCommand(next);
+        for (int idx = 0; idx < input.length(); idx++) {
+            String command = Character
+                    .toString(input.charAt(idx)).trim();
+            int position = idx + 1;
+
+            if (command.length() == 0) {
+                continue;
+            }
+            try {
+                calculator.parseCommand(command);
+            } catch (InsufficientParametersException e) {
+                System.err.println("operator " + command
+                        + " (position: " + position + "): insufficient parameters");
+                break;
+            }
         }
         return calculator.getStack();
     }

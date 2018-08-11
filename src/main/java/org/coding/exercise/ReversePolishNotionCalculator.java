@@ -1,5 +1,6 @@
 package org.coding.exercise;
 
+import org.coding.exercise.common.InsufficientParametersException;
 import org.coding.exercise.common.OperationLog;
 import org.coding.exercise.common.UnsupportedStackOperationException;
 import org.coding.exercise.operation.*;
@@ -11,7 +12,7 @@ public class ReversePolishNotionCalculator {
     private Stack<Double> stack = new Stack<>();
     private Stack<OperationLog> operationLogs = new Stack<>();
 
-    public void parseCommand(String command) {
+    public void parseCommand(String command) throws InsufficientParametersException {
         try {
             StackOperation operation =
                     this.resolveAsOperation(command);
@@ -40,7 +41,7 @@ public class ReversePolishNotionCalculator {
             throw new UnsupportedStackOperationException();
     }
 
-    protected void resolveStackOperation(StackOperation stackOperation, Stack<Double> stack, Stack<OperationLog> operationLogs) {
+    protected void resolveStackOperation(StackOperation stackOperation, Stack<Double> stack, Stack<OperationLog> operationLogs) throws InsufficientParametersException {
         stackOperation.run(stack, operationLogs);
     }
 
