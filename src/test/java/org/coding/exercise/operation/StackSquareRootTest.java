@@ -15,11 +15,10 @@ import static org.mockito.Mockito.mock;
 public class StackSquareRootTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     public void run() throws InsufficientParametersException {
         Stack<Double> stack = new Stack<>();
         stack.push(9D);
-        Stack<OperationLog> operationLogs = mock(Stack.class);
+        Stack<OperationLog> operationLogs = new Stack<>();
 
         StackOperation
                 stackOperation = new StackSquareRoot();
@@ -27,6 +26,13 @@ public class StackSquareRootTest {
 
         Assert.assertEquals(1, stack.size());
         Assert.assertEquals(new Double(3D), stack.peek());
+
+        Assert.assertEquals(1, operationLogs.size());
+
+        OperationLog operationLog =
+                new OperationLog().withPushed(3D).withOrderPopped(9D);
+        Assert.assertArrayEquals(operationLog.getPushed().toArray(), operationLogs.peek().getPushed().toArray());
+        Assert.assertArrayEquals(operationLog.getPopped().toArray(), operationLogs.peek().getPopped().toArray());
     }
 
     @Test(expected = InsufficientParametersException.class)

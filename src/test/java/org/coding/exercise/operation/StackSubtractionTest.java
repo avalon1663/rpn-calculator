@@ -15,12 +15,11 @@ import static org.mockito.Mockito.mock;
 public class StackSubtractionTest {
 
     @Test
-    @SuppressWarnings("unchecked")
     public void run() throws InsufficientParametersException {
         Stack<Double> stack = new Stack<>();
         stack.push(1D);
         stack.push(2D);
-        Stack<OperationLog> operationLogs = mock(Stack.class);
+        Stack<OperationLog> operationLogs = new Stack<>();
 
         StackOperation
                 stackOperation = new StackSubtraction();
@@ -28,6 +27,13 @@ public class StackSubtractionTest {
 
         Assert.assertEquals(1, stack.size());
         Assert.assertEquals(new Double(-1D), stack.peek());
+
+        Assert.assertEquals(1, operationLogs.size());
+
+        OperationLog operationLog =
+                new OperationLog().withPushed(-1D).withOrderPopped(2D, 1D);
+        Assert.assertArrayEquals(operationLog.getPushed().toArray(), operationLogs.peek().getPushed().toArray());
+        Assert.assertArrayEquals(operationLog.getPopped().toArray(), operationLogs.peek().getPopped().toArray());
     }
 
     @Test(expected = InsufficientParametersException.class)
