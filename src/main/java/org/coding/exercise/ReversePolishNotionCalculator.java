@@ -5,12 +5,39 @@ import org.coding.exercise.common.OperationLog;
 import org.coding.exercise.common.UnsupportedStackOperationException;
 import org.coding.exercise.operation.*;
 
+import java.io.ByteArrayInputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class ReversePolishNotionCalculator {
 
     private Stack<Double> stack = new Stack<>();
     private Stack<OperationLog> operationLogs = new Stack<>();
+
+    public void parseCommandSequence(String sequence) {
+        Scanner scanner = new Scanner(
+                new ByteArrayInputStream(sequence.getBytes()));
+        int position = 0;
+
+        while (scanner.hasNext()) {
+            String command =
+                    scanner.next();
+            position += 1;
+            try {
+                this.parseCommand(command);
+            } catch (InsufficientParametersException e) {
+                System.err.println("operator " + command
+                        + " (position: " + position + "): insufficient parameters");
+                break;
+            }
+            position += 1;
+        }
+        System.out.println("stack: " + String.join(" ", this.getStackFormatted()));
+    }
 
     public void parseCommand(String command) throws InsufficientParametersException {
         try {
@@ -55,5 +82,13 @@ public class ReversePolishNotionCalculator {
 
     public Stack<Double> getStack() {
         return this.stack;
+    }
+
+    public List<String> getStackFormatted() {
+        return this.stack.stream().map(each -> {
+            BigDecimal bigDecimal =
+                    new BigDecimal(each).setScale(10, RoundingMode.HALF_UP);
+            return String.valueOf(bigDecimal.doubleValue());
+        }).collect(Collectors.toList());
     }
 }
