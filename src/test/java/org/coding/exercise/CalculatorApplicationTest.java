@@ -27,7 +27,7 @@ public class CalculatorApplicationTest {
                 calculator = new CalculatorApplication(new ReversePolishNotionService());
         String input1 = "2 sqrt";
         calculator.processInput(input1);
-        Assert.assertArrayEquals(new Object[]{String.valueOf(new BigDecimal(Math.sqrt(2D)).setScale(10, RoundingMode.HALF_UP).doubleValue())}, calculator.getStackFormatted().toArray());
+        Assert.assertArrayEquals(new Object[]{String.valueOf(new BigDecimal(Math.sqrt(2D)).setScale(10, RoundingMode.FLOOR).doubleValue())}, calculator.getStackFormatted().toArray());
 
         String input2 = "clear 9 sqrt";
         calculator.processInput(input2);
