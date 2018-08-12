@@ -54,7 +54,7 @@ public class CalculatorApplication {
     public List<String> getStackFormatted() {
         return this.reversePolishNotionService().getStack().stream().map(each -> {
             BigDecimal bigDecimal =
-                    new BigDecimal(each).setScale(10, RoundingMode.HALF_UP);
+                    new BigDecimal(each).setScale(10, RoundingMode.FLOOR);
             return String.valueOf(bigDecimal.doubleValue());
         }).collect(Collectors.toList());
     }
