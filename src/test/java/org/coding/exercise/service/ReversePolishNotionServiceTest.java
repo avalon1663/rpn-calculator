@@ -14,7 +14,7 @@ import java.util.Stack;
 import static org.mockito.Mockito.*;
 
 @RunWith(JUnit4.class)
-public class ReversePolishNotionServiceCalculationTest {
+public class ReversePolishNotionServiceTest {
 
     @Test
     public void parseCommandAsOperation() throws UnsupportedStackOperationException, InsufficientParametersException {
